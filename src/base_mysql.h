@@ -19,5 +19,11 @@ class BaseMysql
         MYSQL* mysql;
 };
 
+class MysqlRow
+{
+    public:
+        string operator[] (int i);
+};
+
 }
 
