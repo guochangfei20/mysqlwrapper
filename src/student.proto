@@ -1,0 +1,19 @@
+package turtle;
+
+message Student
+{
+    optional string name = 1;
+    optional uint64 student_id = 2;
+    optional int32 gender = 3; // 0 - unkown,1 - boy, 2- girl
+    optional int64 phone = 4;
+    optional uint32 uin = 5;
+}
+
+message Teacher
+{
+    optional int32 id = 1;
+    optional string name = 2;
+    optional int32 gender = 3;
+    optional int32 age = 4;
+}
+
