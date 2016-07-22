@@ -6,7 +6,7 @@
 #        Author: turtle - 930030895@qq.com
 #   Description: ---
 #        Create: 2016-04-26 11:15:57
-# Last Modified: 2016-04-27 17:08:17
+# Last Modified: 2016-05-16 14:36:25
 #***********************************************/
 
 #include "mysql_wrapper.h"
@@ -45,15 +45,13 @@ TEST(MysqlWrapper,Test)
     student1.set_name("turtle1");
     EXPECT_EQ(0,mysql_wrapper.Update("students",&condition1,&student1));
     
-    vector<Student*> students;
+    vector<Student> students;
     Student condition;
     condition.set_name("turtle1");
     EXPECT_EQ(0,mysql_wrapper.Select("students",&condition,&students));
-    for (size_t i = 0;i < students.size();i++)
-    {
-        cout << "[" << i << "]" << students[i]->DebugString();
-    }
-    
+   
+    EXPECT_NE(0,(int)students.size());
+
     Teacher teacher1,teacher2,teacher3;
     teacher1.set_name("turtle2");
     teacher1.set_id(930030895);

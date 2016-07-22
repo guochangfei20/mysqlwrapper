@@ -6,7 +6,7 @@
 #        Author: turtle - 930030895@qq.com
 #   Description: ---
 #        Create: 2016-04-15 14:50:27
-# Last Modified: 2016-04-27 13:49:05
+# Last Modified: 2016-05-02 15:03:30
 #***********************************************/
 
 
@@ -301,7 +301,13 @@ namespace turtle
             return ret;
         }
         
-        string sql = "delete from " + table + " where " + where;
+        string sql = "delete from " + table;
+        
+        if (!where.empty())
+        {
+            sql += " where " + where;
+        }
+
         ret = Query(sql);
 
         return ret;

@@ -56,3 +56,19 @@ proto_library(
     ]
 )
 
+cc_binary(
+    name = 'performance_test',
+    srcs = [
+        'performance_test.cpp',
+    ],
+    deps = [
+        ':base_mysql',
+        ':mysql_wrapper',
+        ':student',
+        '//common/system/time:time',
+        '//thirdparty/glog:glog',
+        '//thirdparty/gflags:gflags',
+        '//common/base/string:_number',
+    ],
+)
+

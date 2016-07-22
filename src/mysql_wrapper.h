@@ -6,7 +6,7 @@
 #        Author: turtle - 930030895@qq.com
 #   Description: ---
 #        Create: 2016-04-15 14:08:28
-# Last Modified: 2016-04-27 15:32:56
+# Last Modified: 2016-05-16 14:34:12
 #***********************************************/
 
 #include "base_mysql.h"
@@ -35,16 +35,16 @@ class MysqlWrapper : public BaseMysql
         int Create_table(string table,const Message* message);
         int Insert(string table,const Message* message);
         template<typename Msg>
-        int Select(string table,const Msg* condition,vector<Msg*>* results);
+        int Select(string table,const Msg* condition,vector<Msg>* results);
         template<typename Msg>
-        int Select(string table,string where,const Msg* message,vector<Msg*>* results);
+        int Select(string table,string where,const Msg* message,vector<Msg>* results);
         int Update(string table,const Message* condition,const Message* message);
         int InsertOrUpdate(string table,const Message* message);
         int Delete(string table,const Message* condition);
 };
 
 template<typename Msg>
-int MysqlWrapper::Select(string table,const Msg* condition,vector<Msg*>* results)
+int MysqlWrapper::Select(string table,const Msg* condition,vector<Msg>* results)
 {
     if ( condition == NULL)
     {
@@ -66,7 +66,7 @@ int MysqlWrapper::Select(string table,const Msg* condition,vector<Msg*>* results
 }
 
 template<typename Msg>
-int MysqlWrapper::Select(string table,string where,const Msg* message,vector<Msg*>* results)
+int MysqlWrapper::Select(string table,string where,const Msg* message,vector<Msg>* results)
 {
     if ( message == NULL)
     {
@@ -82,11 +82,11 @@ int MysqlWrapper::Select(string table,string where,const Msg* message,vector<Msg
     }
 
     MysqlRow row;
+    Msg* item = message->New();
+    const Descriptor* descriptor = item->GetDescriptor();
+    const Reflection* reflection = item->GetReflection();
     while ( Fetch_row(&row) == 0 )
     {
-        Msg* item = message->New();
-        const Descriptor* descriptor = item->GetDescriptor();
-        const Reflection* reflection = item->GetReflection();
         for ( int i = 0,len = row.Field_num() ; i < len ; i++ )
         {
             string name = row.Field_name(i);
@@ -123,7 +123,7 @@ int MysqlWrapper::Select(string table,string where,const Msg* message,vector<Msg
             }
         }
 
-        results->push_back(item);
+        results->push_back(*item);
     }
 
     return ret;
